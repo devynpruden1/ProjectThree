@@ -1,1 +1,4 @@
-module.exports={"URI":"mongodb://127.0.0.1:27017/BookLib"}
+module.exports = {
+    URI: "mongodb+srv://devyn2748:gamer2748@cluster0.hakjk.mongodb.net/Workouts?retryWrites=true&w=majority"
+  };
+  
