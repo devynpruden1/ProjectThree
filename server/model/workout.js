@@ -1,13 +1,15 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-let workoutModel = mongoose.Schema({
-    exercise: String,       // Name of the workout exercise
-    duration: Number,       // Duration in minutes
-    date: Date,             // Date of the workout
-    notes: String           // Optional notes about the workout
-},
-{
-    collection: "Workouts"  // Collection name in MongoDB
-});
+let workoutModel = mongoose.Schema(
+  {
+    distance: { type: Number, required: true }, // Distance in km
+    duration: { type: Number, required: true }, // Duration in minutes
+    date: { type: Date, required: true },       // Date of the run
+    notes: { type: String },                   // Optional notes
+  },
+  {
+    collection: 'Workouts' // Make sure this matches your MongoDB collection name
+  }
+);
 
 module.exports = mongoose.model('Workout', workoutModel);

@@ -1,29 +1,35 @@
 <%- include ../Partials/header.ejs %>
 <%- include ../Partials/main_nav.ejs %>
-<!--Workout Database-->
+<!--Run Tracker Database-->
 <main class="container">
     <div class="row">
         <div class="offset-md-1 col-md-10">
             <h1><%= title %></h1>
             <br>
             <a href="/workouts/add" class="btn btn-primary" role="button">
-                <i class="fas fa-plus-circle"></i> Add Workout
+                <i class="fas fa-plus-circle"></i> Add Run
             </a>
             <table class="table table-bordered table-striped table-hover">
                 <tr class="d-flex">
-                    <th class="text-center col-3">Exercise</th>
+                    <th class="text-center col-2">Distance (km)</th>
                     <th class="text-center col-2">Duration (mins)</th>
-                    <th class="text-center col-2">Date</th>
+                    <th class="text-center col-2">Pace (km/min)</th>
                     <th class="col-3">Notes</th>
-                    <th class="text-center col-2">Actions</th>
+                    <th class="text-center col-3">Actions</th>
                 </tr>
                 <% for(let count = 0; count < WorkoutList.length; count++) { %>
                 <tr class="d-flex">
-                    <td class="text-center col-3"><%= WorkoutList[count].exercise %></td>
+                    <td class="text-center col-2"><%= WorkoutList[count].distance %></td>
                     <td class="text-center col-2"><%= WorkoutList[count].duration %></td>
-                    <td class="text-center col-2"><%= new Date(WorkoutList[count].date).toDateString() %></td>
-                    <td class="col-3"><%= WorkoutList[count].notes %> </td>
                     <td class="text-center col-2">
+                        <% if (WorkoutList[count].distance && WorkoutList[count].duration) { %>
+                            <%= (WorkoutList[count].distance / WorkoutList[count].duration).toFixed(2) %>
+                        <% } else { %>
+                            N/A
+                        <% } %>
+                    </td>
+                    <td class="col-3"><%= WorkoutList[count].notes %></td>
+                    <td class="text-center col-3">
                         <a href="/workouts/edit/<%= WorkoutList[count]._id %>" class="btn btn-primary btn-sm">
                             <i class="fas fa-pencil-alt"></i> Edit
                         </a>

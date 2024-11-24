@@ -11,7 +11,7 @@ router.get('/', async (req, res, next) => {
   try {
     const WorkoutList = await Workout.find();
     res.render('Workout/list', {
-      title: 'Workouts',
+      title: 'Runs', // Updated name to "Runs"
       WorkoutList: WorkoutList
     });
   } catch (err) {
@@ -22,11 +22,11 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-/* Create Operation --> Get route for displaying the Add Workout page */
+/* Create Operation --> Get route for displaying the Add Run page */
 router.get('/add', async (req, res, next) => {
   try {
     res.render('Workout/add', {
-      title: 'Add Workout'
+      title: 'Add Run' // Updated title to "Add Run"
     });
   } catch (err) {
     console.error(err);
@@ -36,11 +36,11 @@ router.get('/add', async (req, res, next) => {
   }
 });
 
-/* Create Operation --> Post route for processing the Add Workout page */
+/* Create Operation --> Post route for processing the Add Run page */
 router.post('/add', async (req, res, next) => {
   try {
     let newWorkout = Workout({
-      exercise: req.body.exercise,
+      distance: req.body.distance, // Updated name to "distance"
       duration: req.body.duration,
       date: req.body.date,
       notes: req.body.notes
@@ -56,13 +56,13 @@ router.post('/add', async (req, res, next) => {
   }
 });
 
-/* Update Operation --> Get route for displaying the Edit Workout page */
+/* Update Operation --> Get route for displaying the Edit Run page */
 router.get('/edit/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
     const workoutToEdit = await Workout.findById(id);
     res.render('Workout/edit', {
-      title: 'Edit Workout',
+      title: 'Edit Run', // Updated title to "Edit Run"
       Workout: workoutToEdit
     });
   } catch (err) {
@@ -71,13 +71,13 @@ router.get('/edit/:id', async (req, res, next) => {
   }
 });
 
-/* Update Operation --> Post route for processing the Edit Workout page */
+/* Update Operation --> Post route for processing the Edit Run page */
 router.post('/edit/:id', async (req, res, next) => {
   try {
     let id = req.params.id;
     let updatedWorkout = Workout({
       _id: id,
-      exercise: req.body.exercise,
+      distance: req.body.distance, // Updated name to "distance"
       duration: req.body.duration,
       date: req.body.date,
       notes: req.body.notes
