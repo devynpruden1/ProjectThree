@@ -1,46 +1,83 @@
-<%- include ../Partials/header.ejs %>
-<%- include ../Partials/main_nav.ejs %>
-<!--Run Tracker Database-->
-<main class="container">
-    <div class="row">
-        <div class="offset-md-1 col-md-10">
-            <h1><%= title %></h1>
-            <br>
-            <a href="/workouts/add" class="btn btn-primary" role="button">
-                <i class="fas fa-plus-circle"></i> Add Run
-            </a>
-            <table class="table table-bordered table-striped table-hover">
-                <tr class="d-flex">
-                    <th class="text-center col-2">Distance (km)</th>
-                    <th class="text-center col-2">Duration (mins)</th>
-                    <th class="text-center col-2">Pace (km/min)</th>
-                    <th class="col-3">Notes</th>
-                    <th class="text-center col-3">Actions</th>
-                </tr>
-                <% for(let count = 0; count < WorkoutList.length; count++) { %>
-                <tr class="d-flex">
-                    <td class="text-center col-2"><%= WorkoutList[count].distance %></td>
-                    <td class="text-center col-2"><%= WorkoutList[count].duration %></td>
-                    <td class="text-center col-2">
-                        <% if (WorkoutList[count].distance && WorkoutList[count].duration) { %>
-                            <%= (WorkoutList[count].distance / WorkoutList[count].duration).toFixed(2) %>
-                        <% } else { %>
-                            N/A
-                        <% } %>
-                    </td>
-                    <td class="col-3"><%= WorkoutList[count].notes %></td>
-                    <td class="text-center col-3">
-                        <a href="/workouts/edit/<%= WorkoutList[count]._id %>" class="btn btn-primary btn-sm">
-                            <i class="fas fa-pencil-alt"></i> Edit
-                        </a>
-                        <a href="/workouts/delete/<%= WorkoutList[count]._id %>" class="btn btn-danger btn-sm">
-                            <i class="fas fa-trash-alt"></i> Delete
-                        </a>
-                    </td>
-                </tr>
-                <% } %>
-            </table>
+<%- include('../Partials/header.ejs') %>
+<%- include('../Partials/main_nav.ejs') %>
+
+<main class="container py-4">
+    <!-- Summary Section -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white" style="background-color: #ff7f50;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Distance</h5>
+                    <p class="card-text display-6">
+                        <%= WorkoutList.reduce((sum, run) => sum + (run.distance || 0), 0).toFixed(2) %> km
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white" style="background-color: #ff8c00;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Duration</h5>
+                    <p class="card-text display-6">
+                        <%= WorkoutList.reduce((sum, run) => sum + (run.duration || 0), 0) %> mins
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white" style="background-color: #ff6347;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Average Pace</h5>
+                    <p class="card-text display-6">
+                        <% let totalPace = WorkoutList.reduce((sum, run) => sum + (run.distance / (run.duration || 1)), 0); %>
+                        <%= WorkoutList.length ? (totalPace / WorkoutList.length).toFixed(2) : 'N/A' %> km/min
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Run Tracker Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark" style="background-color: #ff7f50;">
+                <tr>
+                    <th class="text-center">Distance (km)</th>
+                    <th class="text-center">Duration (mins)</th>
+                    <th class="text-center">Pace (km/min)</th>
+                    <th>Notes</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% WorkoutList.forEach((run) => { %>
+                <tr>
+                    <td class="text-center"><%= run.distance %></td>
+                    <td class="text-center"><%= run.duration %></td>
+                    <td class="text-center">
+                        <%= run.distance && run.duration ? (run.distance / run.duration).toFixed(2) : 'N/A' %>
+                    </td>
+                    <td><%= run.notes || 'No notes' %></td>
+                    <td class="text-center">
+                        <a href="/workouts/edit/<%= run._id %>" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-pencil-alt"></i> Edit
+                        </a>
+                        <a href="/workouts/delete/<%= run._id %>" class="btn btn-outline-danger btn-sm">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add Run Button -->
+    <div class="text-center mt-4">
+        <a href="/workouts/add" class="btn btn-lg text-white" style="background-color: #ff4500;">
+            <i class="fas fa-plus-circle"></i> Add Run
+        </a>
+    </div>
 </main>
-<%- include ../Partials/footer.ejs %>
+
+<%- include('../Partials/footer.ejs') %>

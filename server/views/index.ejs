@@ -1,6 +1,20 @@
-<%- include Partials/header.ejs%>
-<%- include Partials/main_nav.ejs%>
-    <!--Main content-->
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-<%- include Partials/footer.ejs%>
+<%- include('./Partials/header.ejs') %>
+<%- include('./Partials/main_nav.ejs') %>
+
+<!-- Hero Section -->
+<div class="container-fluid p-0">
+    <div class="row g-0">
+        <div class="col-12 text-white text-center" 
+             style="background: url('/content/background.jpg') no-repeat center center/cover; height: 100vh;">
+            <div class="d-flex flex-column justify-content-center align-items-center h-100 bg-dark bg-opacity-50">
+                <h1 class="display-3 fw-bold">Run Tracker</h1>
+                <p class="lead fs-4">Track your runs effortlessly, analyze your performance, and achieve your fitness goals.</p>
+                <a href="/workouts" class="btn btn-primary btn-lg mt-4">
+                    View Workouts <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('./Partials/footer.ejs') %>

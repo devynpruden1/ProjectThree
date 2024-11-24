@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 
 let workoutModel = mongoose.Schema(
   {
-    distance: { type: Number, required: true }, // Distance in km
-    duration: { type: Number, required: true }, // Duration in minutes
-    date: { type: Date, required: true },       // Date of the run
-    notes: { type: String },                   // Optional notes
+    distance: { type: Number, required: true },
+    duration: { type: Number, required: true },
+    date: { type: Date, required: true },
+    notes: { type: String },
   },
   {
-    collection: 'Workouts' // Make sure this matches your MongoDB collection name
+    collection: 'Workouts' // This must match the target collection name
   }
 );
 
